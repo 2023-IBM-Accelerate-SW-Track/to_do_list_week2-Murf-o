@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { Component, useEffect } from "react";
 import { Button, TextField } from "@mui/material";
 
 class AddTodo extends Component {
@@ -7,14 +7,20 @@ class AddTodo extends Component {
     super();
     this.state = {
       content: "",
+      date: "",
+      preCondition: "",
+      acceptCondition: ""
     };
   }
+  
+  
   // The handleChange function updates the react state with the new input value provided from the user.
   // "event" is the defined action a user takes. In this case, the event is triggered when the user types something
   // into the text field.
   handleChange = (event) => {
     this.setState({
       content: event.target.value,
+      date: Date().toLocaleString('en-US'),
     });
   };
   // The handleSubmit function collects the forms input and puts it into the react state.
@@ -22,14 +28,31 @@ class AddTodo extends Component {
   // this.props.addTodo(this.state) passes the current state (or user input) into the addTodo function defined
   // in the Home.js file which then adds the input into the list.
   handleSubmit = (event) => {
+    console.log(event);
     event.preventDefault();
     if (this.state.content.trim()) {
       this.props.addTodo(this.state);
       this.setState({
         content: "",
+        date: "",
+        preCondition: "",
+        acceptCondition: ""
       });
+      
     }
   };
+
+   handlePreChange = (event) => {
+    this.setState({
+      preCondition: event.target.value
+    })
+  };
+  handleAcceptChange = (event) =>{
+    this.setState({
+      acceptCondition: event.target.value
+    })
+  };
+
   render() {
     return (
       // 1. When rendering a component, you can render as many elements as you like as long as it is wrapped inside
@@ -46,6 +69,8 @@ class AddTodo extends Component {
           onChange={this.handleChange}
           value={this.state.content}
         />
+        <TextField label="Add Pre-condition" onChange={this.handlePreChange} value={this.state.preCondition}/>
+        <TextField label="Add Accept Condition" onChange={this.handleAcceptChange}  value={this.state.acceptCondition}/>
         <Button
           style={{ marginLeft: "10px" }}
           onClick={this.handleSubmit}
@@ -54,6 +79,7 @@ class AddTodo extends Component {
         >
           Add
         </Button>
+        
       </div>
     );
   }
