@@ -15,12 +15,16 @@ const Todos = ({ todos, deleteTodo }) => {
       return (
         <Grid key={todo.id}>
           <Card style={{marginTop:10}}>
+            <CardContent>
             {/* Remember, we set the local state of this todo item when the user submits the form in 
             AddTodo.js. All we need to do is return the todo list item {todo.content} */}
              <ListItemButton component="a" href="#simple-list">
               <Checkbox onClick={() => deleteTodo(todo.id)} color="primary" style={{paddingLeft: 0}}/>
               <ListItemText primary={todo.content} secondary={todo.date}/>
             </ListItemButton>
+            <ListItemText secondary={todo.preCondition.length !== 0 ? `Pre-Condition: ${todo.preCondition}`: ""}/>
+            <ListItemText secondary={todo.acceptCondition.length !== 0 ? `Accept Condition: ${todo.acceptCondition}`: ""}/>
+            </CardContent>
           </Card>
         </Grid>
       );
